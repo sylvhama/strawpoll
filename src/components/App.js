@@ -1,14 +1,19 @@
 import React from 'react';
 import AppBar from 'material-ui/AppBar';
-import injectTapEventPlugin from 'react-tap-event-plugin';
+import StrawpollCreator from './StrawpollCreator'
 
-injectTapEventPlugin();
-
-const App = () => (
-  <AppBar
-    title="Strawpoll"
-    showMenuIconButton={false}
-  />
-);
+class App extends React.Component {
+	render() {
+		return (
+			<main>
+			  <AppBar
+			    title="Straw Poll"
+			    showMenuIconButton={false}
+			  />
+				<StrawpollCreator />
+			</main>
+		)
+	}
+}
 
 export default App;
