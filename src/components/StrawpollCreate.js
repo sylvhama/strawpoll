@@ -13,10 +13,12 @@ class StrawpollCreate extends React.Component {
     super();
     this.renderChoice = this.renderChoice.bind(this);
     this.addChoice = this.addChoice.bind(this);
+    this.updateChoice = this.updateChoice.bind(this);
     this.removeChoice = this.removeChoice.bind(this);
   }
 
   state = {
+    question: '',
     choices: ['', ''],
   }
 
@@ -28,17 +30,37 @@ class StrawpollCreate extends React.Component {
     return (
       <div key={i}>
         <div style={style.container}>
-          <TextField hintText={`Choice ${i+1}`} fullWidth={true} underlineShow={false} />
-          <IconButton style={style.icon} onClick={() => this.removeChoice(i)}><ContentClear /></IconButton>
+          <TextField value={choice}
+                     onChange={(e, newValue) => this.updateChoice(newValue, i)}
+                     hintText={`Choice ${i+1}`}
+                     fullWidth={true}
+                     underlineShow={false}
+          />
+          <IconButton style={style.icon} 
+                      onClick={() => this.removeChoice(i)}>
+            <ContentClear />
+          </IconButton>
         </div>
         <Divider />
       </div>
     );
   }
 
+  updateQuestion(newValue) {
+    let question = this.state.question;
+    question = newValue;
+    this.setState({question});
+  }
+
   addChoice() {
     let choices = [...this.state.choices];
     choices.push('');
+    this.setState({choices});
+  }
+
+  updateChoice(newValue, index) {
+    let choices = [...this.state.choices];
+    choices[index] = newValue;
     this.setState({choices});
   }
 
@@ -49,12 +71,17 @@ class StrawpollCreate extends React.Component {
   }
 
   render() {
-    const choices = [...this.state.choices];
+    const question = this.state.question,
+          choices = [...this.state.choices];
     return (
     	<Paper zDepth={1} className="paper">
     	  <h2>Create your Straw Poll</h2>
         <form>
-          <TextField hintText="Your question" fullWidth={true} />
+          <TextField value={question} 
+                     onChange={(e, newValue) => this.updateQuestion(newValue)}
+                     hintText="Your question" 
+                     fullWidth={true}
+          />
           <br />
           {choices.map((choice, i) => this.renderChoice(choice, i) )}
           <br />
