@@ -11,6 +11,7 @@ import StrawpollVote from './StrawpollVote';
 import NotFound from './NotFound';
 
 class App extends React.Component {
+
 	render() {
 		return (
 		  <Router>

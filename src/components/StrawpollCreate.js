@@ -1,29 +1,29 @@
 import React from 'react';
-import Divider from 'material-ui/Divider';
+import base from '../base';
+import Choice from './Choice';
+
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import IconButton from 'material-ui/IconButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import ContentClear from 'material-ui/svg-icons/content/clear';
 
 class StrawpollCreate extends React.Component {
 
   constructor() {
     super();
-    this.renderChoice = this.renderChoice.bind(this);
     this.addChoice = this.addChoice.bind(this);
     this.updateChoice = this.updateChoice.bind(this);
     this.removeChoice = this.removeChoice.bind(this);
-    this.isChoiceDeletable = this.isChoiceDeletable.bind(this);
+    this.submit = this.submit.bind(this);
     this.isFormSubmitable = this.isFormSubmitable.bind(this);
   }
 
   state = {
+    id: Date.now(),
     wait: false,
     question: '',
-    choices: ['', ''],
-  }
+    choices: ['', '']
+  };
 
   updateQuestion(newValue) {
     let question = this.state.question;
@@ -49,12 +49,19 @@ class StrawpollCreate extends React.Component {
     this.setState({choices});
   }
 
-  isChoiceDeletable() {
-    const wait = this.state.wait;
-    if(wait) return false;
-    const choices = [...this.state.choices];
-    if(choices.length > 2) return true;
-    return false;
+  submit(e) {
+    e.preventDefault();
+    this.setState({wait: true});
+    const id = this.state.id,
+          question = this.state.question,
+          choices = [...this.state.choices];
+    base.post(`${id}`, {
+      data: {question, choices}
+    }).then(() => {
+      console.log('ok');
+    }).catch(err => {
+      console.error(err);
+    });
   }
 
   isFormSubmitable() {
@@ -67,34 +74,6 @@ class StrawpollCreate extends React.Component {
     return false;
   }
 
-  renderChoice(choice, i) {
-    const wait = this.state.wait,
-          style = {
-            container: {position:'relative', paddingRight:'48px'},
-            icon: {position:'absolute', right:0},
-          };
-    return (
-      <div key={i}>
-        <div style={style.container}>
-          <TextField value={choice}
-                     onChange={(e, newValue) => this.updateChoice(newValue, i)}
-                     hintText={`Choice ${i+1}`}
-                     fullWidth={true}
-                     underlineShow={false}
-                     disabled={wait}
-          />
-          <IconButton style={style.icon} 
-                      onClick={() => this.removeChoice(i)}
-                      disabled={!this.isChoiceDeletable()}>
-            <ContentClear />
-          </IconButton>
-        </div>
-        <Divider />
-      </div>
-    );
-  }
-
-
   render() {
     const wait = this.state.wait,
           question = this.state.question,
@@ -102,7 +81,7 @@ class StrawpollCreate extends React.Component {
     return (
     	<Paper zDepth={1} className="paper">
     	  <h2>Create your Straw Poll</h2>
-        <form>
+        <form onSubmit={(e) => this.submit(e)}>
           <TextField value={question} 
                      onChange={(e, newValue) => this.updateQuestion(newValue)}
                      hintText="Your question" 
@@ -110,7 +89,14 @@ class StrawpollCreate extends React.Component {
                      disabled={wait}
           />
           <br />
-          {choices.map((choice, i) => this.renderChoice(choice, i) )}
+          {choices.map((choice, i) => <Choice key={i}
+                                              value={choice}
+                                              index={i} 
+                                              wait={wait}
+                                              choices={choices}
+                                              updateChoice={(newValue, index) => this.updateChoice(newValue, index)}
+                                              removeChoice={(index) => this.removeChoice(index)}
+                                      /> )}
           <br />
           <RaisedButton
             label="Add choice"
