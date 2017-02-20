@@ -2,7 +2,7 @@ import React from 'react';
 import Paper from 'material-ui/Paper';
 
 const StrawpollShow = () => (
-	<Paper zDepth={1} rounded={false} className="paper">
+	<Paper zDepth={1} className="paper">
 	  <h2>StrawpollShow</h2>
 	</Paper>
 );
