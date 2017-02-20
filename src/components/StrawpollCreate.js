@@ -58,7 +58,8 @@ class StrawpollCreate extends React.Component {
     base.post(`${id}`, {
       data: {question, choices}
     }).then(() => {
-      console.log('ok');
+      const path = `/show/${id}`;
+      this.context.router.push(path);
     }).catch(err => {
       console.error(err);
     });
@@ -116,5 +117,9 @@ class StrawpollCreate extends React.Component {
     )
   }
 }
+
+StrawpollCreate.contextTypes = {
+  router: React.PropTypes.object
+};
 
 export default StrawpollCreate;
