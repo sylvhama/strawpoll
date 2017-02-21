@@ -5,6 +5,15 @@ import Paper from 'material-ui/Paper';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import RaisedButton from 'material-ui/RaisedButton';
 
+const styles = {
+  vote: {
+    marginTop: '2rem',
+  },
+  radioButton: {
+    marginBottom: '1rem',
+  },
+};
+
 class StrawpollVote extends React.Component {
 
   constructor() {
@@ -80,14 +89,6 @@ class StrawpollVote extends React.Component {
 
   render() {
     const {question, choices} = this.state;
-    const styles = {
-      vote: {
-        marginTop: '2rem',
-      },
-      radioButton: {
-        marginBottom: '1rem',
-      },
-    };
     return(
     	<Paper zDepth={1} className="paper">
     	  <h2>{`${question}`}</h2>
