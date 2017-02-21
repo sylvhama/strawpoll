@@ -16,6 +16,7 @@ class StrawpollVote extends React.Component {
 
   state = {
     wait: true,
+    previousVotes: [],
     id: null,
     question: '',
     choices: [],
@@ -24,6 +25,12 @@ class StrawpollVote extends React.Component {
 
   componentWillMount() {
     const id = this.props.match.params.id;
+    let previousVotes = JSON.parse(localStorage.getItem('previousVotes'));
+    if(!Array.isArray(previousVotes)) previousVotes = [];
+    else if(previousVotes.indexOf(id)>-1) {
+      const path = `/show/${id}`;
+      return this.context.router.push(path);
+    } 
     base.fetch(`${id}`, {
       context: this
     }).then(data => {
@@ -31,7 +38,7 @@ class StrawpollVote extends React.Component {
         const wait = false,
               question = data.question,
               choices = [...data.choices];
-        this.setState({wait, id, question, choices});
+        this.setState({wait, previousVotes, id, question, choices});
       }else {
         this.context.router.push('/');
       }
@@ -53,7 +60,10 @@ class StrawpollVote extends React.Component {
     base.update(`${id}`, {
       data: {choices}
     }).then(() => {
-      const path = `/show/${id}`;
+      const previousVotes = [...this.state.previousVotes],
+            path = `/show/${id}`;
+      previousVotes.push(id);
+      localStorage.setItem('previousVotes', JSON.stringify(previousVotes));
       this.context.router.push(path);
     }).catch(err => {
       console.error(err);
