@@ -51,7 +51,7 @@ class StrawpollShow extends React.Component {
               y="0"
               width={`${choice.votes/total*100}%`}
               height="24"
-              fill={highest.indexOf(i)>-1?'#8BC34A':'#03A9F4'}>
+              fill={highest.indexOf(i)>-1?'#8BC34A':'#00bcd4'}>
           <animate attributeType="XML"
                    attributeName="width"
                    from="0"
