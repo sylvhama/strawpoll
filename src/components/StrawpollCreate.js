@@ -22,7 +22,7 @@ class StrawpollCreate extends React.Component {
     id: Date.now(),
     wait: false,
     question: '',
-    choices: ['', '']
+    choices: [{value:'', votes:0}, {value:'', votes:0}]
   };
 
   updateQuestion(newValue) {
@@ -33,13 +33,13 @@ class StrawpollCreate extends React.Component {
 
   addChoice() {
     let choices = [...this.state.choices];
-    choices.push('');
+    choices.push({value:'', votes:0});
     this.setState({choices});
   }
 
   updateChoice(newValue, index) {
     let choices = [...this.state.choices];
-    choices[index] = newValue;
+    choices[index].value = newValue;
     this.setState({choices});
   }
 
@@ -69,9 +69,9 @@ class StrawpollCreate extends React.Component {
     const wait = this.state.wait;
     if(wait) return false;
     const question = this.state.question,
-          choices = [...this.state.choices];
-    const index = choices.indexOf('');
-    if(index === -1 && question.length) return true;
+          choices = [...this.state.choices],
+          emptyChoices = choices.filter((choice) => choice.value.length===0);
+    if(emptyChoices.length===0 && question.length) return true;
     return false;
   }
 
@@ -91,7 +91,7 @@ class StrawpollCreate extends React.Component {
           />
           <br />
           {choices.map((choice, i) => <Choice key={i}
-                                              value={choice}
+                                              value={choice.value}
                                               index={i} 
                                               wait={wait}
                                               choices={choices}

@@ -22,8 +22,8 @@ class App extends React.Component {
 				  />
 				  <Switch>
 						<Route path="/" exact component={StrawpollCreate} />
-						<Route path="/vote/:strawpollId" component={StrawpollVote} />
-						<Route path="/show/:strawpollId" component={StrawpollShow} />
+						<Route path="/vote/:id" component={StrawpollVote} />
+						<Route path="/show/:id" component={StrawpollShow} />
 			  		<Route component={NotFound} />
 			  	</Switch>
 		  	</main>
