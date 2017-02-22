@@ -4,6 +4,7 @@ It's a Progressive Web App to create and share polls.
 * Demo: https://strawpoll.shamann.fr/
 * Material Design implementation: http://www.material-ui.com
 * The votes are updated via web sockets thanks to Firebase: https://github.com/tylermcginnis/re-base
+* Service Worker https://github.com/googlechrome/samples/tree/gh-pages/service-worker/custom-offline-page
 
 ##Create React App
 
