@@ -4,6 +4,9 @@ import base from '../base';
 import Paper from 'material-ui/Paper';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import CircularProgress from 'material-ui/CircularProgress';
+
+let ready = false;
 
 const styles = {
   vote: {
@@ -47,6 +50,7 @@ class StrawpollVote extends React.Component {
         const wait = false,
               question = data.question,
               choices = [...data.choices];
+        ready = true;
         this.setState({wait, previousVotes, id, question, choices});
       }else {
         this.context.router.push('/');
@@ -88,6 +92,11 @@ class StrawpollVote extends React.Component {
   }
 
   render() {
+    if(!ready) return (
+      <Paper style={{textAlign: 'center'}} zDepth={1} className="paper"> 
+        <CircularProgress />
+      </Paper>
+    );
     const {question, choices} = this.state;
     return(
     	<Paper zDepth={1} className="paper">

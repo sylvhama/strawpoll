@@ -3,6 +3,7 @@ import base from '../base';
 import CopyLink from './CopyLink';
 
 import Paper from 'material-ui/Paper';
+import CircularProgress from 'material-ui/CircularProgress';
 
 let ready = false;
 
@@ -42,7 +43,11 @@ class StrawpollShow extends React.Component {
   }
 
   render() {
-    if(!ready) return <div></div>;
+    if(!ready) return (
+      <Paper style={{textAlign: 'center'}} zDepth={1} className="paper"> 
+        <CircularProgress />
+      </Paper>
+    );
     const {question, choices, highest, total} = this.state;
     const renderRect = (choice, i) => {
       if(total===0) return '';
