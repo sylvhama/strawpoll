@@ -68,7 +68,7 @@ class StrawpollShow extends React.Component {
     };
     const renderText = (choice) => {
       if(total===0) return `${choice.votes} vote`;
-      else if(total===1) return `${choice.votes} vote (${Math.round(choice.votes/total*100)}%)`;
+      else if(choice.votes<=1) return `${choice.votes} vote (${Math.round(choice.votes/total*100)}%)`;
       else return `${choice.votes} votes (${Math.round(choice.votes/total*100)}%)`;
     };
     return (
