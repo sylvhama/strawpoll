@@ -40,7 +40,7 @@ class CopyLink extends React.Component {
       <article>
         <Card>
           <CardHeader
-            title="Share this Straw Poll link"
+            title="Share this Straw Poll"
           />
           <CardText>
             <TextField className="vote-url"
