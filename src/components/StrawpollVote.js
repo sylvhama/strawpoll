@@ -44,11 +44,11 @@ class StrawpollVote extends React.Component {
       return this.context.router.push(path);
     } 
     base.isUserSignedIn()
-        .then((isSigned) => {
+        .then(isSigned => {
           if(isSigned) return Promise.resolve(true);
           return base.signInAnonymously();
         })
-        .fetch(id, this)
+        .then(user => base.fetch(id, this))
         .then(data => {
           if(Object.keys(data).length) {
             const wait = false,
@@ -74,11 +74,11 @@ class StrawpollVote extends React.Component {
           choices = this.state.choices;
     choices[this.state.userChoice].votes++;
     base.isUserSignedIn()
-        .then((isSigned) => {
+        .then(isSigned => {
           if(isSigned) return Promise.resolve(true);
           return base.signInAnonymously();
         })
-        .update(id, {choices: choices})
+        .then(base.update(id, {choices: choices}))
         .then(() => {
           const previousVotes = [...this.state.previousVotes],
                 path = `/show/${id}`;

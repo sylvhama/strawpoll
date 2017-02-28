@@ -38,7 +38,7 @@ class StrawpollShow extends React.Component {
             }
           };
     base.isUserSignedIn()
-        .then((isSigned) => {
+        .then(isSigned => {
           if(isSigned) return Promise.resolve(true);
           return base.signInAnonymously();
         })
