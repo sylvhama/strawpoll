@@ -55,14 +55,17 @@ class StrawpollCreate extends React.Component {
     const id = this.state.id,
           question = this.state.question,
           choices = [...this.state.choices];
-    base.post(`${id}`, {
-      data: {question, choices}
-    }).then(() => {
-      const path = `/show/${id}`;
-      this.context.router.push(path);
-    }).catch(err => {
-      console.error(err);
-    });
+    base.isUserSignedIn()
+        .then((isSigned) => {
+          if(isSigned) return Promise.resolve(true);
+          return base.signInAnonymously();
+        })
+        .then(() => base.post(id, {question, choices}))
+        .then(() => {
+          const path = `/show/${id}`;
+          return this.context.router.push(path);
+        })
+        .catch(err => console.error(err));
   }
 
   isFormSubmitable() {

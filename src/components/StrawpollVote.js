@@ -43,21 +43,24 @@ class StrawpollVote extends React.Component {
       const path = `/show/${id}`;
       return this.context.router.push(path);
     } 
-    base.fetch(`${id}`, {
-      context: this
-    }).then(data => {
-      if(Object.keys(data).length) {
-        const wait = false,
-              question = data.question,
-              choices = [...data.choices];
-        ready = true;
-        this.setState({wait, previousVotes, id, question, choices});
-      }else {
-        this.context.router.push('/');
-      }
-    }).catch(err => {
-      console.error(err);
-    });
+    base.isUserSignedIn()
+        .then((isSigned) => {
+          if(isSigned) return Promise.resolve(true);
+          return base.signInAnonymously();
+        })
+        .fetch(id, this)
+        .then(data => {
+          if(Object.keys(data).length) {
+            const wait = false,
+                  question = data.question,
+                  choices = [...data.choices];
+            ready = true;
+            this.setState({wait, previousVotes, id, question, choices});
+          }else {
+            this.context.router.push('/');
+          }
+        })
+        .catch(err => console.error(err));
   }
 
   updateUserChoice(value) {
@@ -70,17 +73,20 @@ class StrawpollVote extends React.Component {
     const id = this.state.id,
           choices = this.state.choices;
     choices[this.state.userChoice].votes++;
-    base.update(`${id}`, {
-      data: {choices}
-    }).then(() => {
-      const previousVotes = [...this.state.previousVotes],
-            path = `/show/${id}`;
-      previousVotes.push(id);
-      localStorage.setItem('previousVotes', JSON.stringify(previousVotes));
-      this.context.router.push(path);
-    }).catch(err => {
-      console.error(err);
-    });
+    base.isUserSignedIn()
+        .then((isSigned) => {
+          if(isSigned) return Promise.resolve(true);
+          return base.signInAnonymously();
+        })
+        .update(id, {choices: choices})
+        .then(() => {
+          const previousVotes = [...this.state.previousVotes],
+                path = `/show/${id}`;
+          previousVotes.push(id);
+          localStorage.setItem('previousVotes', JSON.stringify(previousVotes));
+          this.context.router.push(path);
+        })
+        .catch(err => console.error(err));
   }
 
   isFormSubmitable() {

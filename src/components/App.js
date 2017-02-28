@@ -4,6 +4,7 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
+
 import Header from './Header';
 import StrawpollCreate from './StrawpollCreate';
 import StrawpollShow from './StrawpollShow';

@@ -18,28 +18,32 @@ class StrawpollShow extends React.Component {
   }
 
   componentDidMount() {
-    const id = this.props.match.params.id;
-    base.listenTo(`${id}`, {
-      context: this,
-      then(data) {
-        if(Object.keys(data).length) {
-          const question = data.question,
-                choices = [...data.choices];
-          let highest = [0],
-              total = choices[0].votes;
-          for(let i = 1; i < choices.length; i++) { 
-            let votes = choices[i].votes;
-            if(choices[highest[0]].votes === votes) highest.push(i);
-            else if(choices[highest[0]].votes < votes) highest = [i];
-            total += votes;
-          }
-          ready = true;
-          this.setState({id, question, choices, highest, total});
-        }else {
-          this.context.router.push('/');
-        }
-      }
-    });
+    const id = this.props.match.params.id,
+          callbackFct = (data) => {
+            if(Object.keys(data).length) {
+              const question = data.question,
+                    choices = [...data.choices];
+              let highest = [0],
+                  total = choices[0].votes;
+              for(let i = 1; i < choices.length; i++) { 
+                let votes = choices[i].votes;
+                if(choices[highest[0]].votes === votes) highest.push(i);
+                else if(choices[highest[0]].votes < votes) highest = [i];
+                total += votes;
+              }
+              ready = true;
+              this.setState({id, question, choices, highest, total});
+            }else {
+              this.context.router.push('/');
+            }
+          };
+    base.isUserSignedIn()
+        .then((isSigned) => {
+          if(isSigned) return Promise.resolve(true);
+          return base.signInAnonymously();
+        })
+        .then(() => base.listenTo(id, this, callbackFct))
+        .catch(err => console.error(err));
   }
 
   render() {
