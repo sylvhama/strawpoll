@@ -7,14 +7,16 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
+import {
+  addChoice,
+  updateChoice,
+  removeChoice
+} from './state-functions/StrawpollCreateState';
+
 class StrawpollCreate extends React.Component {
 
   constructor() {
     super();
-    this.addChoice = this.addChoice.bind(this);
-    this.updateChoice = this.updateChoice.bind(this);
-    this.removeChoice = this.removeChoice.bind(this);
-    this.submit = this.submit.bind(this);
     this.isFormSubmitable = this.isFormSubmitable.bind(this);
   }
 
@@ -26,26 +28,22 @@ class StrawpollCreate extends React.Component {
   };
 
   updateQuestion(newValue) {
-    let question = this.state.question;
-    question = newValue;
-    this.setState({question});
+    this.setState({question: newValue});
   }
 
   addChoice() {
-    let choices = [...this.state.choices];
-    choices.push({value:'', votes:0});
+    const newChoice = {value:'', votes:0},
+          choices = addChoice(this.state, newChoice);
     this.setState({choices});
   }
 
   updateChoice(newValue, index) {
-    let choices = [...this.state.choices];
-    choices[index].value = newValue;
+    const choices = updateChoice(this.state, newValue, index);
     this.setState({choices});
   }
 
   removeChoice(index) {
-    let choices = [...this.state.choices];
-    choices.splice(index, 1);
+    const choices = removeChoice(this.state, index);
     this.setState({choices});
   }
 
@@ -105,7 +103,7 @@ class StrawpollCreate extends React.Component {
           <RaisedButton
             label="Add choice"
             icon={<ContentAdd />}
-            onClick={this.addChoice}
+            onClick={() => this.addChoice()}
             disabled={wait}
           />
           <RaisedButton label="Publish Straw Poll" 
