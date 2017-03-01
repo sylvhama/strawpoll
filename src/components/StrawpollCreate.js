@@ -1,6 +1,6 @@
 import React from 'react';
 import base from '../base';
-import Choice from './Choice';
+import Choice from './shared/Choice';
 
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';

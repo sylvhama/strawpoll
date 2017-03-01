@@ -5,7 +5,7 @@ import {
   Switch
 } from 'react-router-dom';
 
-import Header from './Header';
+import Header from './shared/Header';
 import StrawpollCreate from './StrawpollCreate';
 import StrawpollShow from './StrawpollShow';
 import StrawpollVote from './StrawpollVote';

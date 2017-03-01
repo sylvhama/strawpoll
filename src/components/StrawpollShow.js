@@ -1,6 +1,6 @@
 import React from 'react';
 import base from '../base';
-import CopyLink from './CopyLink';
+import CopyLink from './shared/CopyLink';
 
 import Paper from 'material-ui/Paper';
 import CircularProgress from 'material-ui/CircularProgress';
