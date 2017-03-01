@@ -12,7 +12,6 @@ test('addChoice add a new choice', () => {
   expect(finalState.choices.length).toEqual(3);
 });
 
-
 test('updateChoice updates the choice at a specific position with a given value', () => {
   const startState = {
     choices: [{value:'', votes:0}, {value:'', votes:0}]
