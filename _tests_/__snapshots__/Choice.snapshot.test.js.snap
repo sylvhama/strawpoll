@@ -39,7 +39,7 @@ exports[`test Choice component renders the choice correctly 1`] = `
       </div>
       <input
         disabled={false}
-        id="undefined-Choice1-undefined-7413"
+        id="TextField-0"
         onBlur={[Function]}
         onChange={[Function]}
         onFocus={[Function]}

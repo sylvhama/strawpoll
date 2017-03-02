@@ -29,7 +29,8 @@ class Choice extends React.Component {
     return (
       <div key={index}>
         <div style={styles.container}>
-          <TextField value={value}
+          <TextField id={`TextField-${index}`}
+                     value={value}
                      onChange={(e, newValue) => updateChoice(newValue, index)}
                      hintText={`Choice ${index+1}`}
                      fullWidth={true}
