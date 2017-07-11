@@ -7,7 +7,7 @@ It's a Progressive Web App to create and share polls.
 * Users are signed in anonymously https://firebase.google.com/docs/auth/web/anonymous-auth
 * Service Worker https://github.com/googlechrome/samples/tree/gh-pages/service-worker/custom-offline-page
 
-##Create React App
+## Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
