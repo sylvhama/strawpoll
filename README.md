@@ -1,5 +1,7 @@
 # Straw Poll
 
+[![Build Status](https://travis-ci.com/sylvhama/strawpoll.svg?branch=master)](https://travis-ci.com/sylvhama/strawpoll)
+
 It's a Progressive Web App to create and share polls.
 * Demo: https://strawpoll.shamann.fr/
 * Material Design implementation: http://www.material-ui.com
