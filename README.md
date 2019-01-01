@@ -3,7 +3,6 @@
 [![Build Status](https://travis-ci.com/sylvhama/strawpoll.svg?branch=master)](https://travis-ci.com/sylvhama/strawpoll)
 
 It's a Progressive Web App to create and share polls.
-* Demo: https://strawpoll.shamann.fr/
 * Material Design implementation: http://www.material-ui.com
 * The votes are updated via web sockets thanks to Firebase: https://github.com/tylermcginnis/re-base
 * Users are signed in anonymously https://firebase.google.com/docs/auth/web/anonymous-auth
