@@ -119,7 +119,7 @@ class StrawpollCreate extends React.Component {
   }
 }
 
-StrawpollCreate.contextTypes: {
+StrawpollCreate.contextTypes = {
   router: React.PropTypes.func.isRequired
 };
 
