@@ -119,8 +119,8 @@ class StrawpollCreate extends React.Component {
   }
 }
 
-StrawpollCreate.contextTypes = {
-  router: React.PropTypes.object
+StrawpollCreate.contextTypes: {
+  router: React.PropTypes.func.isRequired
 };
 
 export default StrawpollCreate;
